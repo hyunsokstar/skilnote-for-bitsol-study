@@ -1,0 +1,254 @@
+{% load static %}
+
+<!-- cs: common subject -->
+{% if request.user.is_superuser %}
+<button
+    type="button"
+    class="btn btn-outline-primary insert_btn_for_common_subject"
+>
+    공통 주제 입력 버튼
+</button>
+{% else %} {% endif %}
+
+<br /><br />
+
+<style>
+    .common_subject_container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 1300px;
+        gap: 8px;
+        border: 1px solid black;
+    }
+
+    .cs_tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+    }
+
+    .cs_tooltip .cs_tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 0;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -60px;
+    }
+
+    .cs_tooltip:hover .cs_tooltiptext {
+        visibility: visible;
+    }
+</style>
+
+<div class="common_subject_container">
+    {% for common_subject in object_list %}
+    <!-- <a href="" class="user_list_for_common_subject" data-id="{{cs.id}}">
+        {{common_subject.subject}}
+    </a> -->
+    <div class="cs_tooltip">
+        <a
+            href=""
+            id="common_subject_el_{{common_subject.id}}"
+            class="user_list_for_common_subject"
+            data-id="{{common_subject.id}}"
+        >
+            {{common_subject.subject}}
+        </a>
+        {% if request.user.is_superuser %}
+        <span class="cs_tooltiptext">
+            <button
+                data-id="{{common_subject.id}}"
+                class="modify_common_subject"
+            >
+                수정
+            </button>
+            <button
+                data-id="{{common_subject.id}}"
+                data-author="{{common_subject.author}}"
+                class="delete_common_subject"
+            >
+                삭제
+            </button>
+        </span>
+        {% else %} {% endif %}
+    </div>
+    {% endfor %}
+
+    <div class="common_subject_row_area"></div>
+</div>
+
+<!-- template area -->
+<script class="common_subject_row_template" type="text/x-template">
+
+    <!-- <a href="" class="user_list_for_common_subject" data-id="<%=common_subject_id%>">
+        <%= common_subject_subject %>
+    </a> -->
+
+    <div class="common_subject_container">
+        <div class="cs_tooltip">
+            <a
+                href=""
+                id="common_subject_el_<%=common_subject_id%>"
+                class="user_list_for_common_subject"
+                data-id="<%=common_subject_id%>"
+            >
+                <%= common_subject_subject %>
+            </a>
+            <span class="cs_tooltiptext">
+                <button
+                    data-id="<%=common_subject_id%>"
+                    class="modify_common_subject"
+                >
+                    수정
+                </button>
+                <button
+                    data-id="<%=common_subject_id%>"
+                    data-author="<%=common_subject_author%>"
+                    class="delete_common_subject"
+                >
+                    삭제
+                </button>
+            </span>
+        </div>
+
+
+</script>
+
+<!-- js area -->
+<script type="text/javascript">
+    // alert("insert_btn_for_common_subject click");
+
+    $("body").on("click", ".delete_common_subject", function (e) {
+        e.preventDefault();
+        const cs_id = $(this).data("id");
+        const author = $(this).data("author");
+
+        const current_user = "{{request.user}}"
+
+        if (author === current_user) {
+            // alert("삭제 하겠습니다.")
+            $.ajax({
+                type: "POST",
+                url: "/wm/myshortcut/delete_common_subject",
+                data: {
+                    cs_id:cs_id,
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                },
+                success: function (result) {
+                    $("#common_subject_el_" + cs_id).remove();
+                    alert(result.message);
+                },
+            });
+        } else {
+            alert("작성자만 지울수 있습니다. 작성자는 " + author);
+        }
+    });
+
+    // modify_common_subject
+    $(document).on("click", ".modify_common_subject", function (e) {
+        var cs_id = $(this).data("id");
+        // alert("cs_id : " + cs_id);
+        const common_subject = prompt("common_subject 를 입력해 주세요 ", "");
+
+        if (!common_subject) {
+            return;
+        }
+
+        if (common_subject) {
+            $.ajax({
+                type: "POST",
+                url: "/wm/myshortcut/update_for_common_subject",
+                data: {
+                    common_subject_id: cs_id,
+                    common_subject: common_subject,
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                },
+                success: function (result) {
+                    $("#common_subject_el_" + result.common_subject_id).html(
+                        result.common_subject_subject
+                    );
+                    alert(result.message);
+                },
+            });
+        } else {
+            alert("내용을 입력하지 않으셨어여 다시 시도해주세요");
+        }
+    });
+
+    $(document).on("click", ".insert_btn_for_common_subject", function (e) {
+        // alert("insert_btn_for_common_subject click");
+
+        const common_subject = prompt("할일을 입력해 주세요 ", "");
+
+        if (!common_subject) {
+            return;
+        }
+
+        if (common_subject) {
+            $.ajax({
+                type: "POST",
+                url: "/wm/myshortcut/insert_for_common_subject",
+                data: {
+                    common_subject: common_subject,
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                },
+                success: function (result) {
+                    alert(result.message);
+
+                    // underscore를 이용해 row 추가 하기
+                    var common_subject_row_template = $(
+                        ".common_subject_row_template"
+                    ).html();
+                    console.log(
+                        "common_subject_row_template : ",
+                        common_subject_row_template
+                    );
+                    var tpl = _.template(common_subject_row_template);
+                    var table_row = $(".common_subject_row_template").length;
+                    //
+                    var rendered = tpl({
+                        table_row_id: table_row + 1,
+                        common_subject_id: result.common_subject_id,
+                        common_subject_subject: result.common_subject_subject,
+                        common_subject_author: result.common_subject_author,
+                    });
+                    $(rendered).appendTo($(".common_subject_row_area"));
+                    // $("1234").appendTo($(".common_subject_row_area"));
+                },
+            });
+        } else {
+            alert("내용을 입력하지 않으셨어여 다시 시도해주세요");
+        }
+    });
+
+    $(document).on("click", ".user_list_for_common_subject", function (e) {
+        e.preventDefault();
+        var cs_id = $(this).data("id");
+
+        $(".user_list_area").hide();
+
+        const url = "/wm/myshortcut/user_list_for_common_subject/" + cs_id;
+
+        $.get(url)
+            .done((result) => {
+                console.log("result : ", result);
+                $(".user_list_area").show();
+                $(".user_list_area").html(result);
+            })
+            .fail(() => {
+                console.log("fail");
+            })
+            .always(() => {
+                console.log("always");
+            });
+    });
+</script>

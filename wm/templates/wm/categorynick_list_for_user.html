@@ -1,0 +1,225 @@
+<h2>카테고리 정보</h2>
+{% if category %}
+
+<h2>category list for {{category.author}}</h2>
+
+1234 1234
+<table class="" id="todo_list" style="width: 100%">
+    {% for ca in column_list %}
+    <tr id="ca{{forloop.counter}}">
+        <td>ca{{forloop.counter}}</td>
+        <td>
+            <input
+                type="text"
+                name=""
+                id="input_category_nick"
+                value="{{ca}}"
+                class="form-control"
+            />
+        </td>
+
+        <td>
+
+            <a
+                class="btn btn-outline-success btn-sm"
+                href="/wm/myshortcut/{{page_user}}/{{forloop.counter}}"
+                >이동</a
+            >
+
+            {% if category.author == request.user %}
+            <a
+                class="btn btn-outline-primary btn-sm cn-btn"
+                data-id="{{category.id}}"
+                data-field="ca{{forloop.counter}}"
+                >수정</a
+            >
+
+            {% endif %}
+            {% if request.user.is_authenticated %}
+            <input
+                type="text"
+                placeholder="to"
+                style="width: 40px"
+                class="input_for_chapter_copy"
+            />
+
+            <a
+                class="btn btn-outline-danger btn-sm copy_chapter_to_x"
+                data-category="ca{{forloop.counter}}"
+                data-owner="{{category.author}}"
+                data-index="{{forloop.counter}}"
+                data-category_title="{{ca}}"
+            >
+                복사
+                <span
+                    class=""
+                    id="copy_chapter_loading_{{forloop.counter}}"
+                    role="status"
+                    aria-hidden="true"
+                ></span>
+            </a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% else %}
+
+<table class="table table-borderd">
+    <tr>
+        <td>카테고리 정보가 없습니다.</td>
+    </tr>
+</table>
+
+{% endif %}
+
+<!-- modal area -->
+
+<!-- js area -->
+
+<script type="text/javascript">
+    $(".copy_chapter_to_x").click(function (e) {
+        e.preventDefault();
+        const owner = $(this).data("owner");
+        const category = $(this).data("category");
+        const index = $(this).data("index");
+        const category_title = $(this).data("category_title");
+        // alert(owner);
+        // alert(category);
+        // alert(index);
+
+        // alert(category_title);
+
+        // const selection = prompt(
+        //     `${owner} 노트의 ${category} 를 복사 하시겠습니까? (x,y)`
+        // );
+
+        const destination_chapter = $(this)
+            .siblings(".input_for_chapter_copy")
+            .val();
+        // alert("destination chapter : " + destination_chapter);
+
+        // if (destination_chapter > 0 && destination_chapter < 121) {
+        //     alert("1~ 120을 선택해 주세요");
+        //     return;
+        // }
+
+        if (destination_chapter == "") {
+            const destination_chapter = prompt(
+                `어느 챕터에 복사하시겠습니까(1 ~ 120)`
+            );
+        }
+
+        if (destination_chapter > 0 && destination_chapter < 121) {
+            console.log("챕터 선택 ok");
+        } else {
+            alert("1~ 120을 선택해 주세요");
+        }
+
+        // if (selection == "y" || selection == "Y") {
+            $("#copy_chapter_loading_" + index).addClass(
+                "spinner-border spinner-border-sm"
+            );
+            $.ajax({
+                type: "POST",
+                url: "{% url 'wm:copy_chapter_to_x' %}",
+                data: {
+                    owner: owner,
+                    category: category,
+                    index: index,
+                    destination_chapter: destination_chapter,
+                    category_title: category_title,
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                },
+                success: function (result) {
+                    $("#copy_chapter_loading_" + index).removeClass(
+                        "spinner-border spinner-border-sm"
+                    );
+                    alert(
+                        "result.message (user_list_for_memo) : " +
+                            result.message
+                    );
+                },
+            });
+        // } else {
+        //     $("#copy_chapter_loading_" + index).removeClass(
+        //         "spinner-border spinner-border-sm"
+        //     );
+        //     alert("취소 하셨습니다.");
+        // }
+    });
+
+    $(".copyforNickSubjectBtn").click(function (e) {
+        const author = $(this).data("author");
+        const original_category = $(this).data("category");
+        // alert("author : "+ author);
+        // alert("category : "+ category);
+
+        var destination_category = prompt(
+            "어디로 복사 하시겠습니까? (1~99)",
+            ""
+        );
+
+        if (destination_category.match("^[1-9][0-9]?$")) {
+            window.history.pushState("", "", "/wm/myshortcut/");
+
+            $.ajax({
+                type: "POST",
+                url: "copyForCategorySubjectToMyCategory/",
+                data: {
+                    author: author,
+                    original_category: original_category,
+                    destination_category: destination_category,
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                },
+                success: function (result) {
+                    alert(
+                        author +
+                            "의 " +
+                            original_category +
+                            "에서 나의 " +
+                            destination_category +
+                            "로 복사(기존 내용 삭제)"
+                    );
+                },
+            });
+        } else {
+            alert("이동할 카테고리는 1~99 중에 선택해주세요");
+        }
+    });
+
+    $(".cn-btn").click(function (e) {
+        // alert("클릭");
+        const ca_id = $(this).data("id");
+        const field = $(this).data("field");
+        const ca_nick_update = $(this)
+            .parent()
+            .parent()
+            .find("#input_category_nick")
+            .val();
+
+        // alert("ca_id : " + ca_id)
+        // alert("field : " + field);
+        // alert("ca_nick_update : " + ca_nick_update);
+
+        window.history.pushState("", "", "/wm/myshortcut/");
+
+        $.ajax({
+            type: "POST",
+            url: "update/category/nick/",
+            data: {
+                ca_id: ca_id,
+                field: field,
+                ca_nick_update: ca_nick_update,
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+            },
+            success: function (result) {
+                // alert("category nick update success")
+                alert("result.message : " + result.message);
+                // 이동한후 목록 버튼 클릭하도록 설정
+                // $(location). attr('href', 'http://127.0.0.1:7000/wm/myshortcut/');
+            },
+        });
+    });
+</script>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link href="{% static 'styles/css/switch-button.css' %}" rel="stylesheet">
+</head>
+<body>
+    
+    
+            <button type="button" class="btn btn-outline-primary plan_insert_button" style="float: right;">계획 쓰기</button>
+    
+            <table class="table table-bordered" id="todo_list" width="100%">
+                <tr>
+                    <td>id</td>
+                    <td>author</td>
+                    <td>content</td>
+                    <td>completed</td>
+                    <td>created_at</td>
+                    <td>삭제</td>
+                </tr>
+                {% if object_list.exists %}
+    
+                {% for plan in object_list %}
+                <tr id="plan_row_{{plan.id}}">
+                    <td>체크박스</td>
+                    <td id=author_{{plan.id}}>{{plan.owner_for_plan.username}}</td>
+                    <td>
+                        <input type="text" class="plan_content" size="100%" value="{{plan.plan_content}}">
+                        <input type="text" class="" size="25%" placeholder="start time" value="{{plan.start_time}}" />
+                        <input type="text" class="plan_end_time" size="25%" placeholder="end time" value="{{plan.end_time}}" /> <br>
+                        <input type="text" class="plan_start_ca" size="25%" placeholder="start" value="{{plan.start_ca}}" />
+                        <input type="text" class="plan_end_ca" size="25%" placeholder="start" value="{{plan.end_ca}}" />
+                        <button class="plan_update_button" data-id="{{plan.id}}">plan update</button>
+                    </td>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" {% if plan.completed %}checked{% endif %} class="complete-check" data-id="{{plan.id}}">
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                    <td>
+                        {{plan.start_time}}
+                    </td>
+                    <td>
+                        <a href="#">
+                            <img class="delete_btn_for_plan_list" src="{% static 'icon/x_mark.png' %}" data-author={{plan.owner_for_plan}} data-id="{{plan.id}}" alt="" >
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+    
+                {% else %}
+                <tr>
+                    <td colspan="5">
+                        <h4>아직 계획이 없습니다.</h4>
+                    </td>
+                </tr>
+                {% endif %}
+                <tbody id="plan_tbody"></div>
+            </table>
+    
+    <!-- template area -->       
+    <script class="plan_row" type="text/x-template">
+        <tr id="plan_row_<%=plan_id%>">
+            <td>체크박스</td>
+            <td id=author_{{plan.id}}><%=plan_content%></td>
+            <td>
+                <input type="text" class="plan_content" size="100%" value=<%=plan_content%>>
+                <input type="text" class="" size="25%" placeholder="start time" value=<%=plan_start_time%> />
+                <input type="text" class="plan_end_time" size="25%" placeholder="end time" value=<%=plan_end_time%> /> <br>
+                <input type="text" class="plan_start_ca" size="25%" placeholder="start" value=<%=plan_start_ca%> />
+                <input type="text" class="plan_end_ca" size="25%" placeholder="start" value=<%=plan_end_ca%> />
+                <button class="plan_update_button" data-id=<%=plan_id%>>plan update</button>
+            </td>
+            <td>
+                <label class="switch">
+                    <input type="checkbox" {% if plan.completed %}checked{% endif %} class="complete-check" data-id=<%=plan_id%>>
+                    <span class="slider round"></span>
+                </label>
+            </td>
+            <td>
+                <%=plan_start_time%>
+            </td>
+            <td>
+                <a href="#">
+                    <img class="delete_btn_for_plan_list" src="{% static 'icon/x_mark.png' %}" data-author=<%=owner_for_plan%> id="<%=plan_id%>" alt="" >
+                </a>
+            </td>
+        </tr>
+    </script>
+
+
+
+    
+    <!-- js area -->
+    <script type="text/javascript">
+
+$('body').on('click', '.delete_btn_for_plan_list', function(e) {
+
+    e.preventDefault();
+        const plan_id = $(this).data('id');
+        const author = $(this).data('author');
+        const current_user = "{{request.user}}"
+        console.log(" author : ", author);
+        console.log("current user : ", current_user);
+
+    if(author === current_user ){
+        // alert("삭제 하겠습니다.")
+        $.ajax({
+                type: "POST",
+                url: '/wm/myshortcut/delete_plan_list/' + plan_id,
+                data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function (result) {
+                            $("#plan_row_" + plan_id).remove();
+                            alert(result.message);
+                        }
+                    });
+    } else {
+        alert("작성자만 지울수 있습니다. 작성자는 " + author)
+    }
+
+
+    });
+
+
+
+$(".plan_insert_button").click(function () {
+        // alert("계획 입력 버튼 클릭")
+        const plan_content = prompt("할일을 입력해 주세요 ", "");
+        console.log("plan_content : ", plan_content);
+
+        if (plan_content) {
+            $.ajax({
+                type: "POST",
+                url: '/wm/myshortcut/insert_plan',
+                data: {
+                    plan_content: plan_content,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (result) {
+                    alert(result.message);
+
+                    // underscore를 이용해 row 추가 하기
+                    var plan_row_template = $('.plan_row').html();
+                    var tpl = _.template(plan_row_template);
+                    var plan_row = $('.plan_row').length;
+
+                    // plan_id,plan_content,plan_start_time,plan_end_time,plan_start_ca,plan_end_ca
+                    var rendered = tpl({
+                        plan_id: plan_row + 1,
+                        plan_content : result.plan_content,
+                        plan_start_time : result.plan_start_time,
+                        plan_end_time : result.plan_end_time,
+                        plan_start_ca : result.plan_start_ca,
+                        plan_end_ca : result.plan_end_ca,
+                        owner_for_plan : result.owner_for_plan,
+                    });
+                    $(rendered).appendTo($('#plan_tbody'));
+                }
+            });
+        } else {
+            alert("내용을 입력하지 않으셨어여 다시 시도해주세요")
+        }
+
+    })
+
+    // plan_update_button
+    $('body').on('click', '.plan_update_button', function (e) {
+        // alert("plan 수정 버튼 클릭")
+		var plan_id = $(this).data("id");
+        var plan_content = $(this).parent().find(".plan_content").val();
+        var plan_start_ca = $(this).parent().find(".plan_start_ca").val();
+        var plan_end_ca = $(this).parent().find(".plan_end_ca").val();
+        // alert("plan_content : "+ plan_content)
+        // alert("plan_start_ca : "+ plan_start_ca)
+        // alert("plan_end_ca : "+ plan_end_ca)
+
+        var my = $(this);
+
+        $.ajax({
+			type: "POST",
+			url: '/wm/myshortcut/update_plan',
+			data: {
+				plan_id: plan_id,
+				plan_content: plan_content,
+				plan_start_ca: plan_start_ca,
+				plan_end_ca: plan_end_ca,
+				csrfmiddlewaretoken: '{{ csrf_token }}'
+			},
+			success: function (result) {
+				alert(result.message)
+                console.log("result", result.end_time)
+                my.parent().find(".plan_end_time").val(result.end_time)
+			}
+		});
+    })
+
+    $('body').on('click', '.complete-check', function (e) {
+        // alert($(this).is(':checked'))
+		var plan_id = $(this).data("id");
+        var plan_completed = $(this).is(':checked')
+
+        if (plan_completed) {
+            plan_completed = "True"
+        } else {
+            plan_completed = "False"
+        }
+        // alert("plan_completed : "+ plan_completed)
+        var my = $(this);
+        console.log("my : ", my);
+
+		$.ajax({
+			type: "POST",
+			url: '/wm/myshortcut/update_plan_complete',
+
+			data: {
+				plan_id: plan_id,
+				plan_completed: plan_completed,
+				csrfmiddlewaretoken: '{{ csrf_token }}'
+			},
+			success: function (result) {
+				alert(result.message)
+                // alert("result.end_time"+ result.end_time)
+                my.parent().parent().parent().find(".plan_end_time").val(result.end_time)
+                my.parent().parent().parent().find(".plan_end_time").css("border-color", "yellow")
+                if(plan_completed == "False"){
+                    my.parent().parent().parent().find(".plan_end_time").val("")
+                }
+			}
+		});
+    });
+
+    </script>
+    
+    
+    
+    </body>
+    
+
+</body>
+</html>

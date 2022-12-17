@@ -1,0 +1,222 @@
+{% load static %}
+
+        <button type="button" class="btn btn-outline-primary insert_btn_for_lecture_list" style="float: right;">lecture bookmark 추가</button>
+
+        <table class="table table-bordered" id="todo_list" width="100%">
+            <tr>
+                <td>id</td>
+                <td>author</td>
+                <td>title/lecture</td>
+                <td>created</td>
+                <td>삭제</td>
+            </tr>
+            {% if object_list.exists %}
+
+            {% for lecture in object_list %}
+            <tr id="lecture_row_{{lecture.id}}">
+                <td>{{lecture.id}}</td>
+                <td id=author_{{lecture.id}}>{{lecture.author}}</td>
+                <td>
+                    <input type="text" class="lecture_title_{{lecture.id}}" size="80%" value="{{lecture.title}}">
+                    <button class="lecture_update_button" data-id="{{lecture.id}}">lecture bookmark update</button>
+                    <input type="text" class="lecture_url" size="80%" placeholder="lecture url" value="{{lecture.lecture_url}}" />
+                    <button data-url = {{lecture.lecture_url}} class="open_url">이동</button>
+                    <!-- {{lecture.created_at}} -->
+                </td>
+                <td>{{lecture.created_at}}</td>
+                <td>
+                    <a href="#">
+                        <img class="delete_btn_for_lecture_list" src="{% static 'icon/x_mark.png' %}" data-author={{lecture.author}} data-id="{{lecture.id}}" alt="" >
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+
+            {% else %}
+            <tr>
+                <td colspan="5">
+                    <h4>아직 계획이 없습니다.</h4>
+                </td>
+            </tr>
+            {% endif %}
+            <tbody id="lecture_tbody"></div>
+        </table>
+
+
+
+    <!-- template area -->       
+    <script class="lecture_row" type="text/x-template">
+        <tr id="lecture_row_<%=lecture_id%>">
+            <td><%=lecture_id%></td>
+            <td id="author_<%=lecture_id%>"><%=lecture_author%></td>
+            <td>
+                <input type="text" class="lecture_title_<%=lecture_id%>" size="80%" value="<%=lecture_title%>">
+                <button class="lecture_update_button" data-id="<%=lecture_id%>">lecture bookmark update</button>
+                <input type="text" class="" size="80%" placeholder="lecture url" value="" />
+                <button data-url="<%= lecture_url %>" class="open_url">이동</button>
+
+                <!-- {{lecture.created_at}} -->
+            </td>
+            <td><%=lecture_created_at%></td>
+            <td>
+                <a href="#">
+                    <img class="delete_btn_for_plan_list" src="{% static 'icon/x_mark.png' %}" data-author=<%=lecture_author%> id=<%=lecture_id%> alt="" >
+                </a>
+            </td>
+        </tr>
+    </script>
+
+
+<!-- js area -->
+<script type="text/javascript">
+// lecture_update_button
+
+
+$('body').on('click', '.delete_btn_for_lecture_list', function(e) {
+    e.preventDefault();
+    const lecture_id = $(this).data('id');
+    const author = $(this).data('author');
+    const current_user = "{{request.user}}"
+    console.log(" author : ", author);
+    console.log(" lecture_id : ", lecture_id);
+    console.log("current user : ", current_user);
+
+if(author === current_user ){
+    // alert("삭제 하겠습니다.")
+    $.ajax({
+            type: "POST",
+            url: '/wm/myshortcut/delete_lecture_list/' + lecture_id,
+            data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (result) {
+                        $("#lecture_row_" + lecture_id).remove();
+                        alert(result.message);
+                    }
+                });
+} else {
+    alert("작성자만 지울수 있습니다. 작성자는 " + author)
+}
+
+
+});
+
+$(".open_url").click(function () {
+        console.log("url 이동 클릭");
+
+        var url = $(this).data("url");
+        var win = window.open("http://"+url, '_blank');
+        if (win) {
+            //Browser has allowed it to be opened
+            win.focus();
+        } else {
+            //Browser has blocked it
+            alert('Please allow popups for this website');
+        }
+    });
+
+    // plan_update_button
+    $('body').on('click', '.lecture_update_button', function (e) {
+        // alert("plan 수정 버튼 클릭")
+        var lecture_id = $(this).data("id");
+        var lecture_title = $(this).parent().find(".lecture_title_"+lecture_id).val();
+        var lecture_url = $(this).parent().find(".lecture_url").val();
+        alert("lecture_title : "+ lecture_title)
+        // alert("plan_start_ca : "+ plan_start_ca)
+        // alert("plan_end_ca : "+ plan_end_ca)
+
+        $.ajax({
+            type: "POST",
+            url: '/wm/myshortcut/update_lecture_bookmark',
+
+            data: {
+                lecture_id: lecture_id,
+                lecture_title: lecture_title,
+                lecture_url: lecture_url,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function (result) {
+                alert(result.message)
+            }
+        });
+    })
+
+
+    // $('body').on('click', '.delete_btn_for_plan_list', function(e) {
+        $(".delete_btn_for_plan_list").click(function () {
+
+        console.log('delete guest book row!');
+        e.preventDefault();
+        var id = $(this).attr("id");
+        const current_user = "{{request.user}}"
+        const author = $(this).data('author');
+        console.log("current user : ", current_user);
+        console.log(" author : ", author);
+
+    if(current_user === author ){
+        // alert("삭제 하겠습니다.")
+        $.ajax({
+                type: "POST",
+                url: '/wm/myshortcut/delete_guest_book_list/' + id,
+                data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function (result) {
+                            $("#lecture_row_" + id).remove();
+                            alert(result.message);
+                        }
+                    });
+    } else {
+        alert("작성자만 지울수 있습니다. 작성자는 " + author)
+    }
+
+
+    });
+
+    $(".insert_btn_for_lecture_list").click(function () {
+        // alert("계획 입력 버튼 클릭")
+        const lecture_title = prompt("강의 제목을 입력해 주세요 ", "");
+
+    	if (!lecture_title) {
+    		return;
+    	};
+
+    	if (lecture_title) {
+    		$.ajax({
+    			type: "POST",
+    			// url: 'insert_for_guest_book/',
+    			url: '/wm/myshortcut/insert_for_lecture_list',
+    			data: {
+                    lecture_title: lecture_title,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+    			},
+    			success: function (result) {
+    				alert(result.message);
+
+    				// underscore를 이용해 row 추가 하기
+    				var lecture_row_template = $('.lecture_row').html();
+    				var tpl = _.template(lecture_row_template);
+    				var table_row = $('.table_row').length;
+                    //
+    				var rendered = tpl({
+    					table_row_id: table_row + 1,
+                        lecture_id : result.lecture_id,
+    					lecture_author: result.lecture_author,
+    					lecture_title: result.lecture_title,
+    					lecture_created_at: result.lecture_created_at,
+    					lecture_url: result.lecture_url,
+    				});
+    				$(rendered).appendTo($('#lecture_tbody'));
+    			}
+    		});
+    	} else {
+    		alert("내용을 입력하지 않으셨어여 다시 시도해주세요")
+        }
+
+    })
+
+</script>
+
+
+
+</body>

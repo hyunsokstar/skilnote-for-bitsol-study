@@ -1,0 +1,70 @@
+/* 라벨 디자인 <=> 원통 */
+/* 라벨 안에 인풋이 포함되어 있을때 라벨을 클릭하면 인풋이 체크 된다. */
+/* 위치상으로 부모 역할이기도 함 */
+/* 전체적인 크기는 라벨에 맞춰 진다. */
+.switch {
+    position: relative; /* 부모 클래스 */
+    display: inline-block; /* 크기 */
+    width: 60px;
+    height: 34px;
+}
+
+/* 체크 박스는 안에 위치하되 숨겨 */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* 자식 클래스 <=> 절대 위치 */
+/* 색깔 설정 */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+/* 버튼 손잡이 */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;  /* 26 * 2 + 8 = 60 인데 8 을 2로 나누면 4 */
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+/* 클릭하면 체크 되고 전체 색깔 바뀜 */
+input:checked + .slider {
+    background-color: #2196f3;
+}
+
+/* 포커스 되었을때, 체크 박스 눌렀을때, 다른데 클릭하면 풀림 */
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196f3; /* 좌우 상하 번짐 색깔 */
+}
+
+/* 체크 하면 손잡이 이동 */
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}

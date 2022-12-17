@@ -1,0 +1,311 @@
+[33mcommit 0e3ba65c314868b697b941e85b711bd70bbf02c9[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: hyun <hyunsokstar@gmail.com>
+Date:   Sun Mar 27 11:56:09 2022 +0900
+
+    update for login page re
+
+[33mcommit f33098ec513762fb3817c9182cb70fbe21fc0ff2[m
+Author: hyun <hyunsokstar@gmail.com>
+Date:   Sun Mar 27 10:24:11 2022 +0900
+
+    update for login page
+
+[33mcommit 4189da0025581a671423b463fc55cae1d7339800[m
+Author: hyun <hyunsokstar@gmail.com>
+Date:   Sun Mar 27 10:14:23 2022 +0900
+
+    update for require
+
+[33mcommit 651bae7d0957faf31a955e317279cab0eb7e6d3a[m
+Author: hyun <hyunsokstar@gmail.com>
+Date:   Sun Mar 27 04:04:08 2022 +0900
+
+    update for vacuum
+
+[33mcommit 8d1779588be47b1a2513505e23179081683a8319[m
+Author: root <root@vultr.guest>
+Date:   Sat Mar 26 18:54:48 2022 +0000
+
+    update
+
+[33mcommit 9eda6e1934d21a1eb4cb45f65ae49bcc40a0e84c[m
+Author: root <root@vultr.guest>
+Date:   Fri Dec 17 23:17:02 2021 +0000
+
+    update for innotree note
+
+[33mcommit 45b1a21bcd4b600d49eccf51d2f56bfd39ba002b[m
+Author: root <root@vultr.guest>
+Date:   Sat Oct 16 03:21:06 2021 +0000
+
+    update for 1016 2
+
+[33mcommit 34df9bec564934cea46e29c4ff01b0577b5eff56[m
+Author: root <root@vultr.guest>
+Date:   Sat Oct 16 02:05:03 2021 +0000
+
+    update for 1016
+
+[33mcommit 43da287c789bce8ae49003caa8584a899a10499e[m
+Author: node-hyun <node-hyun@github.com>
+Date:   Wed Sep 8 07:35:21 2021 +0900
+
+    update for react
+
+[33mcommit dcbe96231e881549ba033b506b9fcf64885eb519[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Fri Jul 23 06:09:47 2021 +0900
+
+    update for mongodb
+
+[33mcommit 22ce14209c5c1471039ff968280d37a935c1c6fd[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Sun Jul 18 07:41:31 2021 +0900
+
+    update for redux saga test
+
+[33mcommit 203e3f89941e3f131367e2696c783e6e5a18ea4c[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Sun Jul 18 07:09:27 2021 +0900
+
+    update for redux saga
+
+[33mcommit 388e7f780038dd156e52ff8c832e3fb97145498f[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Sat Jul 17 18:20:15 2021 +0900
+
+    update for react redux 2
+
+[33mcommit 93c3c4efe376031307f867dc1b24dd2ac5c34e05[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Sat Jul 17 13:59:38 2021 +0900
+
+    update for connect react redux
+
+[33mcommit bb84b22185a17b57a100ffca9dc50baf6364b7ad[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Thu Jul 15 23:02:31 2021 +0900
+
+    update for redux
+
+[33mcommit 1e0d479573692adcef3f5f179e6d485b26508497[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Thu Jul 15 22:34:36 2021 +0900
+
+    update for class component
+
+[33mcommit c9cb1b3cd28d674c2e49a57f83247573f56f5cca[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Thu Jul 15 01:45:50 2021 +0900
+
+    update for react-redux
+
+[33mcommit f060500ceca7ef2277e5488db6ba78150a2dbe1e[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Fri Jul 9 05:23:16 2021 +0900
+
+    update for setting-skilnote
+
+[33mcommit 3c3ca5fbbabbde6e90f2c8eb9429152f1f1c353a[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Fri Jul 9 04:18:13 2021 +0900
+
+    update for accounts2
+
+[33mcommit 1f251d97c10654984a52aa701c3e012cfa4508b1[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Thu Jul 8 06:33:19 2021 +0900
+
+    update for ts-react ca4
+
+[33mcommit e10b252e2078fe8cdd7961858ba6f1f2c6b98742[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Wed Jul 7 06:43:42 2021 +0900
+
+    update for ts-react ca1
+
+[33mcommit 38e2f04d62cf502d0c5ad593ab976c6d0081c8fe[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Mon Jun 21 19:19:36 2021 +0900
+
+    update for vue js ca12
+
+[33mcommit 25a0b93fe1c5401bb15a759434e9638e5bd2c14b[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Mon Jun 21 14:06:16 2021 +0900
+
+    update for vue ca8
+
+[33mcommit 8604a58af414af43eb3eb287ad9bacf61dc36920[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Sun Jun 20 17:17:15 2021 +0900
+
+    update for nest js ca25
+
+[33mcommit af15d40a5de63679dcc8acfd054343fd3d672424[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Sun Jun 20 12:18:48 2021 +0900
+
+    update for nest js ca 21
+
+[33mcommit 49420731d8d1740cfb2f7fe471bd35fac43e0e91[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Sat Jun 19 11:52:18 2021 +0900
+
+    update for nest js ca18
+
+[33mcommit b8a07f34fa6c102bcfedc8b57f915c7ef2f22cde[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Sat Jun 19 11:04:10 2021 +0900
+
+    update for nest js ca17
+
+[33mcommit 7c5889439737b5daeef2006afb437f61ed9bca75[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Fri Jun 18 14:06:03 2021 +0900
+
+    update for nest js ca14
+
+[33mcommit 6f2f54b15c8e964c5a32800e773cacd48f16b41d[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Fri Jun 18 13:11:27 2021 +0900
+
+    update for nest js ca12
+
+[33mcommit 0a6744f16c06f4947bc30fbfe7cd0f432c145db4[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Fri Jun 18 08:24:23 2021 +0900
+
+    update for nestjs ca10
+
+[33mcommit 96ac1c4b85beae2fafba09a1af093a9c7206b38e[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Thu Jun 17 13:50:16 2021 +0900
+
+    update for nest js ca11
+
+[33mcommit 78257dd9e55116c41d2860aa26691f82bfd10992[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Thu Jun 17 11:27:46 2021 +0900
+
+    update for nest js ca10
+
+[33mcommit 6d13bc4e0262930698b69d82dda9fd81d192a7dc[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Wed Jun 16 06:33:27 2021 +0900
+
+    update for nest js ca7
+
+[33mcommit 7e4c410e3b877184da85995f734fb92082e5e89c[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Tue Jun 15 09:33:30 2021 +0900
+
+    update for nest js ca7
+
+[33mcommit 6b471b45f0fd032d640fedc6412541efe56184bc[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Mon Jun 14 17:39:03 2021 +0900
+
+    update for nest js
+
+[33mcommit 559a74fcdd6802c181d211ee983ea83d201f18ef[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Mon Jun 14 11:55:27 2021 +0900
+
+    update for nest js ca4
+
+[33mcommit f9a61090a6497805812c2e04d828bb1ac66a89e0[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Sun Jun 13 11:44:14 2021 +0900
+
+    update for delivery example
+
+[33mcommit 2570cbff83cc33425a53f7ac0cc38ff85778810b[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Mon May 31 01:11:40 2021 +0900
+
+    update for github
+
+[33mcommit e29dab9c8a0e9f426c31c1fc1c5fea3ecc6313c6[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Sun May 30 21:00:14 2021 +0900
+
+    update for git basic
+
+[33mcommit 43df68c4ddc395e291e301624255378a8c7a7a01[m
+Author: node-hyun <addias1993@naver.com>
+Date:   Wed May 26 08:45:47 2021 +0900
+
+    update for github
+
+[33mcommit 6d837f7a4cabe4a5a25411445fb685517a0f2d75[m
+Author: hyunsok oh <terecal@gmail.com>
+Date:   Tue May 25 08:17:10 2021 +0900
+
+    update for gitrin
+
+[33mcommit 4c932ad34377dafd95673f7b6bf7251f28b668ac[m
+Author: hyunsok <terecal@daum.net>
+Date:   Wed Apr 28 08:00:44 2021 +0900
+
+    update for ppt2
+
+[33mcommit f459fc9da1680cf7ede6aac8a093ec15103dfa9b[m
+Author: hyunsok <terecal@daum.net>
+Date:   Wed Apr 28 07:55:44 2021 +0900
+
+    update for ppt
+
+[33mcommit 83366e1a534f336dc667a0995a2b4ea155255e83[m
+Author: hyunsok <terecal@daum.net>
+Date:   Mon Apr 12 08:08:40 2021 +0900
+
+    update for login page
+
+[33mcommit 2810a6d9a60ef5a378207c7a95da72e1b808a319[m
+Author: hyunsok <terecal@daum.net>
+Date:   Sun Apr 11 21:44:47 2021 +0900
+
+    update for site host name
+
+[33mcommit eafc017a2ca78157c9eca6b2f531877fb725718a[m
+Author: hyunsok <terecal@daum.net>
+Date:   Sun Apr 11 20:42:30 2021 +0900
+
+    update for ip adress
+
+[33mcommit e39abe147ccb893b5f9bd5be891e037876d01609[m
+Author: hyunsok <terecal@daum.net>
+Date:   Sun Apr 11 20:39:33 2021 +0900
+
+    update for updqte
+
+[33mcommit cffabb4ad26ba8459b14a8668586a5dd47ef3d7f[m
+Author: hyunsok <terecal@daum.net>
+Date:   Sun Apr 11 20:36:15 2021 +0900
+
+    update for updqte for todo app
+
+[33mcommit a1de6fef0d5177cbabfec654826c5ab9e3b82354[m
+Author: hyunsok <terecal@daum.net>
+Date:   Sun Apr 11 20:35:12 2021 +0900
+
+    update2
+
+[33mcommit 707e524531cca684e00465f1fff109898e7704c0[m
+Author: hyunsok <terecal@daum.net>
+Date:   Sun Apr 11 20:33:13 2021 +0900
+
+    update for updqte
+
+[33mcommit 2c759d62b9b2967a392046b12593f4ed3d1cecb4[m
+Author: hyunsok <terecal@daum.net>
+Date:   Sun Apr 11 20:15:56 2021 +0900
+
+    update for gitignore
+
+[33mcommit 24e747e28b0e74a3c4e4668a65db5cb3c9f6b85c[m
+Author: hyunsok <terecal@daum.net>
+Date:   Sun Apr 11 19:35:59 2021 +0900
+
+    first update for skilnote for innotree

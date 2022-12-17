@@ -1,0 +1,93 @@
+{% extends "layout.html" %} {% load crispy_forms_tags %}
+{% load static %}
+<!-- {% load i18n %} -->
+<!-- {% load account socialaccount %} -->
+{% load static %} {% block head_title %}{% trans "Sign In" %}{% endblock %}
+{%block extra_head %}
+<link rel="stylesheet" href="{% static 'styles/login.css' %}" />
+
+{% endblock %} {% block content5 %}
+<!-- {% if socialaccount_providers %} -->
+<p>
+  {% blocktrans with site.name as site_name %}Please sign in with one of your
+  existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a> for
+  a {{ site_name }} account and sign in below:{% endblocktrans %}
+</p>
+
+<!-- <div class="socialaccount_ballot">
+  <ul class="socialaccount_providers">
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </ul>
+  <div class="login-or">{% trans 'or' %}</div>
+</div> -->
+<!-- {% include "socialaccount/snippets/login_extra.html" %} -->
+{% else %} {% blocktrans %} {% endblocktrans %}
+<!-- <img src="{% static 'logo/skilnote-for-java.png' %}" width="90%" height="25%" alt="" class="mb-2"> -->
+{% endif %}
+
+
+<div class="login-container">
+  <h1 class="login-title">Skil Note For Starter &nbsp;&nbsp;</h1>
+  <form method="post" class="login-form">
+    <!-- {% csrf_token %} {{ form.as_p }} -->
+    {% csrf_token %} {{ form|crispy }}
+
+    <button type="submit" class="mybutton">Login</button>
+    <button class="mybutton">
+      <a href="{{ signup_url }}">register</a>
+    </button>
+  </form>
+</div>
+
+<div class="common_subject_list_area">
+    
+</div>
+
+<br><br>
+
+<div class="user_list_area">
+  <!-- 유저 정보 출력 -->
+</div>
+
+<br />
+
+  </div>
+</div>
+
+
+<script src="{% static 'script/login.js' %}"></script>
+
+{% endblock %}
+
+<script type="text/javascript">
+  {% block extra_js %}
+
+  $(document).ready(function () {
+    const url = "/wm/myshortcut/common_subject_list"
+    $.get(url)
+      .done((result) => {
+        $(".common_subject_list_area").html(result)
+      })
+      .fail(() => {
+        console.log("fail");
+      })
+      .always(() => {
+        console.log('always');
+      })
+  });
+
+  $(document).ready(function () {
+    const url = "/wm/userlist/loginpage"
+    $.get(url)
+      .done((result) => {
+        $(".user_list_area").html(result)
+      })
+      .fail(() => {
+        console.log("fail");
+      })
+      .always(() => {
+        console.log('always');
+      })
+  });
+  {% endblock %}
+</script>

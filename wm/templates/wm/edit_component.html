@@ -1,0 +1,59 @@
+edit_component.html #1122
+<div class="header-box-for-input-mode">
+    <div class="header-box-column">
+        <div>
+            <h4>부분 이동</h4>
+            <span style="padding-left: 0px">
+                from: <input type="text" class="writer_start" /> ~ <input type="text" class="writer_end" /> &nbsp; to: <input type="text" class="user_start" /> ~
+                <input type="text" class="user_end" />
+            </span>
+            <button class="partial_move_btn_for_user" data-username="{{request.user}}">이동</button>
+        </div>
+        <h4>공백 만들기 제거 하기</h4>
+        <div style="display: flex; justify-content: flex-start; border: 0px solid pink; gap: 10px">
+            <span>
+                +@: <input type="text" class="page_plus_number" />
+                <button class="page_plus_a_button" data-username="{{request.user}}">공백 추가</button>
+                <span class="page_plus_a_button" id="loading_for_page_plus_a" role="status" aria-hidden="true"></span>
+            </span>
+            <span>
+                -@: <input type="text" class="page_minus_number" />
+                <button class="page_minus_a_button" data-username="{{request.user}}">공백 제거</button>
+            </span>
+        </div>
+
+    </div>
+
+    <div class="header-box-column">
+        <div>
+            <h4>부분 삭제</h4>
+            <span>
+                from:
+                <input type="text" class="writer_start" /> ~ <input type="text" class="writer_end" /> &nbsp; to:
+                <!-- <input type="text" class="user_start" /> ~
+                <input type="text" class="user_end" /> -->
+            </span>
+            <button class="partial_delete_btn_for_user" data-username="{{request.user}}">삭제</button>
+        </div>
+    </div>
+
+    <div class="header-box-column">
+        <div>
+            부분 복사 <br />
+            <label for="partial_copy_option1"> add</label>
+            <input type="radio" id="partial_copy_option1" name="partial_copy_option" value="add" checked />
+            <label for="partial_copy_option2"> replace</label>
+            <input type="radio" id="partial_copy_option2" name="partial_copy_option" value="replace" /> <br>
+            owner:
+            <input type="text" style="width: 260px; background-color: aliceblue" class="writer_id_input_for_copy" />
+            <br />
+            <span style="padding-left: 0px">
+                from: <input type="text" class="writer_start" /> ~ <input type="text" class="writer_end" /> &nbsp; to: <input type="text" class="user_start" /> ~
+                <input type="text" class="user_end" />
+            </span>
+            <button class="partial_copy_from_another_user">부분 복사</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"></script>
